@@ -60,3 +60,57 @@
 @media(max-width:520px){.bloom-stage{min-height:390px}.bloom-stage-label,.bloom-stage-hint{left:14px;right:14px}.bloom-stage-label{top:14px}.bloom-copy{padding:19px 16px 22px}.colorways{grid-template-columns:repeat(5,minmax(0,1fr))}.bouquet-picker{grid-template-columns:repeat(2,minmax(0,1fr));max-height:350px}.bouquet-choice{grid-template-columns:38px minmax(0,1fr) 16px}.bouquet-choice svg{width:36px;height:48px}.vase-controls{grid-template-columns:1fr}.vase-colors{gap:8px}}
 @media(prefers-reduced-motion:reduce){.bouquet-sway{animation:none}.bouquet-choice{transition:none}}
 
+/* Clearer studio controls and easier browsing for the expanded flower library. */
+.bloom-exhibit{box-shadow:6px 6px 0 #b9c5a0}
+.bloom-stage{background:#090e12}
+.bouquet-heading{align-items:flex-start}
+.choice-count{flex:0 0 108px;width:108px;height:auto;min-height:70px;gap:4px;padding:8px}
+.choice-count b{color:#e0f0b5;font:700 24px/1 Georgia,serif}
+.choice-count small{color:#c0d6b2;font-size:9px;line-height:1.2;letter-spacing:.1em}
+.choice-count span{color:#b7c5b0;font:600 9px/1.2 system-ui,sans-serif}
+.bouquet-intro{max-width:56ch;font-size:13px;line-height:1.65}
+.bouquet-size{font-size:10px}
+.clear-bouquet{min-height:38px;padding:7px 12px;font-size:11px;cursor:pointer}
+.bouquet-current{max-height:72px;gap:6px}
+.bouquet-chip{min-height:32px;padding:5px 8px;font-size:10px;cursor:pointer}
+.bloom-fieldset legend,.bloom-search>span{margin-bottom:7px;color:#c5d4ba;font-size:10px}
+.colorways{gap:5px}
+.colorway{min-height:46px;padding:6px 2px}
+.colorway>span{width:17px;height:17px}
+.colorway small{font-size:9px}
+.bloom-search{gap:6px}
+.bloom-search input{min-height:44px;padding:9px 11px;border-color:#81927c;font-size:13px}
+.flower-filters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.flower-filter{min-width:0;min-height:40px;padding:7px 8px;border:1px solid #506652;background:#1c2821;color:#d4dfc8;font-size:10px;font-weight:750;line-height:1.25;text-align:center;cursor:pointer;transition:background .15s,border-color .15s}
+.flower-filter:hover{border-color:#bfd89d;background:#26372c}
+.flower-filter[aria-pressed="true"]{border-color:#cfe7a9;background:#344a35;color:#f8f5df}
+.bouquet-picker{max-height:250px;gap:7px}
+.bouquet-choice{grid-template-columns:48px minmax(0,1fr) 20px;min-height:68px;padding:6px;gap:7px}
+.bouquet-choice svg{width:45px;height:60px}
+.choice-copy strong{font-size:10px}
+.choice-copy small{font-size:9px}
+.choice-add{font-size:21px}
+.bouquet-count{margin:0!important;color:#c0ccb6!important;font-size:10px;line-height:1.45}
+.vase-controls{gap:12px;margin-top:5px}
+.vase-controls .bloom-fieldset{padding:9px;border:1px solid #364b3d;background:#18211d}
+.shape-choice{min-height:38px;padding:6px 8px;font-size:10px;cursor:pointer}
+.vase-colors{gap:7px}
+.vase-color{width:30px;height:30px;cursor:pointer}
+.bloom-stage-label{font-size:11px}
+.bloom-stage-hint{font-size:11px}
+.bouquet-sway{animation-duration:7s}
+.bouquet-sway:nth-child(2n){animation-duration:8.2s}
+@media(max-width:520px){
+  .bloom-stage{min-height:410px}
+  .choice-count{flex-basis:96px;width:96px;min-height:68px;padding:7px}
+  .choice-count b{font-size:22px}
+  .bloom-copy{padding-inline:16px}
+  .flower-filters{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .flower-filter{min-height:42px;font-size:10px}
+  .bouquet-picker{max-height:360px}
+  .bouquet-choice{grid-template-columns:42px minmax(0,1fr) 18px;min-height:66px}
+  .bouquet-choice svg{width:40px;height:56px}
+  .vase-color{width:34px;height:34px}
+}
+@media(prefers-reduced-motion:reduce){.bouquet-sway{animation:none}}
+
