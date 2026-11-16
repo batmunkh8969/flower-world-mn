@@ -38,7 +38,7 @@
     .btn-ghost{background:var(--paper);color:var(--ink)}
     .btn-ghost:hover{background:#fff3cd}
     .hero-aside{margin:20px 0 0;color:#6e8068;font-size:12px;font-weight:750}
-    .hero-art{width:100%;min-width:0}
+    .hero-art{width:100%;min-width:0;container-type:inline-size}
     .section{padding-block:88px}
     .section-heading{display:grid;grid-template-columns:1fr minmax(270px,.75fr);align-items:end;gap:26px;margin-bottom:30px}
     .book-heading{grid-template-columns:minmax(0,1fr) minmax(240px,.75fr) auto}
@@ -149,7 +149,7 @@
     </section>
     <section class="section game-bg" id="play" aria-labelledby="play-title">
       <div class="wrap">
-        <div class="section-heading"><div><div class="eyebrow">01 / ТОГЛООМ</div><h2 id="play-title">Шинжээр нь тань.</h2></div><p><span id="play-flower-count">Цэцгийн олон төрөл</span> дотроос таван өөр цэцэг санамсаргүй гарна. Тайлбарыг уншаад дөрвөн өөр хэлбэрийн пиксел зураг дундаас олоорой.</p></div>
+        <div class="section-heading"><div><div class="eyebrow">01 / ТОГЛООМ</div><h2 id="play-title">Шинжээр нь тань.</h2></div><p><span id="play-flower-count">Цэцгийн олон төрөл</span> сангаас таван өөр цэцэг санамсаргүй гарна. Тайлбарыг уншаад дөрвөн өөр хэлбэрийн пиксел зураг дундаас олоорой.</p></div>
         <div class="game-shell">
           <div class="game-visual" aria-label="Таних даалгаврын цэцгийн талбай">
             <span class="frame-tag" id="visual-tag">ТАЛБАЙН ТЭМДЭГЛЭЛ</span>
@@ -202,7 +202,7 @@
       const flowers=window.flowerData;
       const $=id=>document.getElementById(id),shuffle=list=>{const out=[...list];for(let i=out.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[out[i],out[j]]=[out[j],out[i]]}return out};
       const grid=$('flower-grid');let activeBook=0,order=[],current=0,score=0,attempts=0,answered=false;
-      $('hero-flower-count').textContent=flowers.length+' төрлийн';$('play-flower-count').textContent=flowers.length+' цэцгийн сангаас';$('game-flower-count').textContent=flowers.length+' ЦЭЦГИЙН САН';$('book-flower-count').textContent=flowers.length+' ПИКСЕЛЭН';
+      $('hero-flower-count').textContent=flowers.length+' төрлийн';$('play-flower-count').textContent=flowers.length+' цэцгийн';$('game-flower-count').textContent=flowers.length+' ЦЭЦГИЙН САН';$('book-flower-count').textContent=flowers.length+' ПИКСЕЛЭН';
       function addCard(f,index){const button=document.createElement('button');button.type='button';button.className='flower-card';button.dataset.flowerId=f.id;button.setAttribute('aria-pressed',String(index===activeBook));button.innerHTML=FlowerArt.renderSvg(f.id)+'<strong>'+f.name+'</strong><span>'+f.signature+'</span>';button.addEventListener('click',()=>showFlower(index));grid.append(button)}
       function renderCards(){const query=$('flower-search').value.trim().toLocaleLowerCase();const matches=flowers.map((flower,index)=>({flower,index})).filter(item=>!query||(item.flower.name+' '+item.flower.latin+' '+item.flower.signature).toLocaleLowerCase().includes(query));grid.replaceChildren();$('library-count').textContent=matches.length+' / '+flowers.length+' цэцэг';if(matches.length===0){const empty=document.createElement('p');empty.className='empty-library';empty.textContent='Ийм нэртэй цэцэг олдсонгүй. Нэрийг монгол эсвэл латин үсгээр дахин хайгаарай.';grid.append(empty);return}matches.forEach(item=>addCard(item.flower,item.index))}
       function showFlower(index){const f=flowers[index];activeBook=index;$('book-art').innerHTML=FlowerArt.renderSvg(f.id);$('book-number').textContent=String(index+1).padStart(2,'0');$('book-name').textContent=f.name;$('book-latin').textContent=f.latin;$('book-appearance').textContent=f.appearance;$('book-leaves').textContent=f.leaves;$('book-detail').textContent=f.detail;$('book-signature').textContent=f.signature;$('book-source').href=f.source;[...grid.children].forEach(card=>card.setAttribute('aria-pressed',String(card.dataset.flowerId===f.id)))}
