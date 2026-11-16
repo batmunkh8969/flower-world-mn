@@ -47,7 +47,21 @@
     bluebell:{...green,petal:'#6886ca',petalLight:'#b3c8f0',petalShade:'#435b9e',center:'#e5dcaf',centerDark:'#635b65',seed:'#fff3cc'},
     fritillaria:{...green,petal:'#a64d70',petalLight:'#e8b8c7',petalShade:'#70364e',center:'#718d55',centerDark:'#405943',seed:'#f5dcaa'},
     strelitzia:{...green,stem:'#48684b',leaf:'#4d845e',leafDark:'#2b573e',leafLight:'#a4c777',petal:'#ec8141',petalLight:'#ffc35f',petalShade:'#b84b3a',center:'#427da3',centerDark:'#294b70',seed:'#fff0b6'},
-    chrysanthemum:{...green,petal:'#efb443',petalLight:'#ffe28a',petalShade:'#c8782d',center:'#905236',centerDark:'#5c3d31',seed:'#f7d274'}
+    chrysanthemum:{...green,petal:'#efb443',petalLight:'#ffe28a',petalShade:'#c8782d',center:'#905236',centerDark:'#5c3d31',seed:'#f7d274'},
+    passionflower:{...green,stem:'#57714e',petal:'#eee6d5',petalLight:'#fff8e7',petalShade:'#afc5d0',center:'#664d87',centerDark:'#3b385b',seed:'#f3d876'},
+    protea:{...green,stem:'#53664b',petal:'#d8839a',petalLight:'#f6c3c9',petalShade:'#a95573',center:'#b66d53',centerDark:'#68414a',seed:'#e9c477'},
+    aquilegia:{...green,petal:'#8568bb',petalLight:'#d6c6ed',petalShade:'#544786',center:'#e9bd68',centerDark:'#614967',seed:'#fff1cb'},
+    poinsettia:{...green,stem:'#526f48',petal:'#cf4d55',petalLight:'#f78a76',petalShade:'#95394e',center:'#e8c45a',centerDark:'#8b5b3d',seed:'#fff0b9'},
+    lantana:{...green,petal:'#e8944b',petalLight:'#ffd36c',petalShade:'#d35e66',center:'#a34c5b',centerDark:'#713649',seed:'#f7e090'},
+    amaryllis:{...green,petal:'#e9768b',petalLight:'#ffb7c4',petalShade:'#ad4568',center:'#f1c46b',centerDark:'#814653',seed:'#fff0c0'},
+    morningglory:{...green,stem:'#526b50',petal:'#7759c2',petalLight:'#d9c8f2',petalShade:'#4b3d91',center:'#f2d97b',centerDark:'#826caa',seed:'#fff0cc'},
+    nasturtium:{...green,petal:'#ed713d',petalLight:'#ffbd57',petalShade:'#b93e39',center:'#624338',centerDark:'#392d35',seed:'#ffe38b'},
+    calendula:{...green,petal:'#f2a533',petalLight:'#ffdf68',petalShade:'#cf6e25',center:'#74432c',centerDark:'#452e2a',seed:'#dfac4a'},
+    forgetmenot:{...green,petal:'#639cdb',petalLight:'#b9ddf5',petalShade:'#4268a8',center:'#f2cb5f',centerDark:'#806249',seed:'#fff2c3'},
+    bougainvillea:{...green,stem:'#69513f',petal:'#d75a9d',petalLight:'#f3a5cf',petalShade:'#974475',center:'#fff4e8',centerDark:'#a96e88',seed:'#f4d26d'},
+    helleborus:{...green,petal:'#e8e5d5',petalLight:'#fffbe9',petalShade:'#b3bba4',center:'#e6bd58',centerDark:'#997044',seed:'#fff0bd'},
+    sweetpea:{...green,stem:'#54734e',petal:'#dc86a7',petalLight:'#ffd1d7',petalShade:'#975b91',center:'#ead18a',centerDark:'#74516d',seed:'#fff3cf'},
+    fuchsia:{...green,stem:'#536e4a',petal:'#a845a4',petalLight:'#e39bc9',petalShade:'#713674',center:'#d94e60',centerDark:'#6c3049',seed:'#ffd579'}
   };
   const variants=[null,
     {petal:'#ee78b8',petalLight:'#ffd1ed',petalShade:'#b34587',center:'#d785bd',centerDark:'#713d73',seed:'#fff0b6'},
@@ -114,6 +128,37 @@
     function tinyFloret(cx,cy,r=2){for(let i=0;i<4;i++){const a=i*Math.PI/2;put(cx+Math.round(Math.cos(a)*r),cy+Math.round(Math.sin(a)*r),colors.petal);put(cx+Math.round(Math.cos(a)*(r-1)),cy+Math.round(Math.sin(a)*(r-1)),colors.petalLight)}put(cx,cy,colors.center)}
     function stem(y0=22,y1=45,curve=0){let px=17,py=y0;for(let y=y0;y<=y1;y++){const x=17+Math.round(curve*Math.sin((y-y0)/Math.max(1,y1-y0)*Math.PI));put(x,y,colors.stem);if(x<WIDTH-1&&y%4===0)put(x+1,y,colors.leafLight);if(y>y0)line(px,py,x,y,colors.stem);px=x;py=y}}
     function body(){
+      if(id==='morningglory'){
+        line(17,45,17,12,colors.stem);line(17,37,24,31,colors.stem);line(24,31,23,24,colors.stem);line(17,29,10,24,colors.stem);
+        leaf(17,37,7,31,3,false);leaf(17,28,27,23,3,false);put(26,22,colors.leafLight);return;
+      }
+      if(id==='nasturtium'){
+        line(17,45,17,24,colors.stem);line(17,38,9,32,colors.stem);line(17,35,25,28,colors.stem);
+        ellipse(8,30,7,5,-.25,colors.leaf,colors.leafLight);ellipse(26,26,7,5,.35,colors.leaf,colors.leafLight);
+        line(8,30,8,25,colors.leafDark);line(26,26,25,21,colors.leafDark);leaf(17,44,6,40,2,false);return;
+      }
+      if(id==='calendula'){
+        stem(20,45,1);leaf(18,39,4,34,3.2);leaf(18,36,30,31,3.1);leaf(17,31,8,27,2.5);return;
+      }
+      if(id==='forgetmenot'){
+        line(17,45,17,21,colors.stem);line(17,31,8,24,colors.stem);line(17,27,25,19,colors.stem);line(8,24,7,18,colors.stem);line(25,19,27,14,colors.stem);
+        leaf(17,41,7,36,2.5);leaf(17,35,28,31,2.2);leaf(17,30,10,26,1.8);return;
+      }
+      if(id==='bougainvillea'){
+        line(17,45,17,18,colors.stem);line(17,32,8,25,colors.stem);line(17,28,27,20,colors.stem);line(8,25,5,19,colors.stem);line(27,20,30,13,colors.stem);
+        leaf(17,39,7,33,3);leaf(17,33,27,28,2.8);leaf(17,27,10,23,2.2);return;
+      }
+      if(id==='helleborus'){
+        line(17,43,17,21,colors.stem);leaf(17,44,4,36,4.2);leaf(17,44,30,36,4.2);leaf(17,43,9,29,3.1,false);leaf(17,42,26,28,3.1,false);return;
+      }
+      if(id==='sweetpea'){
+        line(17,45,17,15,colors.stem);line(17,33,25,27,colors.stem);line(25,27,24,20,colors.stem);line(17,27,9,23,colors.stem);
+        leaf(17,40,7,35,2.5,false);leaf(17,36,27,31,2.4,false);leaf(17,29,10,25,2,false);put(24,19,colors.leafLight);return;
+      }
+      if(id==='fuchsia'){
+        line(17,45,17,19,colors.stem);line(17,31,8,24,colors.stem);line(17,34,27,26,colors.stem);line(8,24,7,18,colors.stem);line(27,26,29,19,colors.stem);
+        leaf(17,40,5,35,2.8);leaf(17,36,29,31,2.7);leaf(17,29,8,25,2.2);return;
+      }
       if(id==='allium'||id==='delphinium'||id==='snapdragon'){
         line(17,45,17,id==='allium'?18:24,colors.stem);
         if(id==='allium'){leaf(17,43,3,39,2.4,false);leaf(17,43,31,38,2.2,false)}
@@ -329,6 +374,59 @@
       }else if(id==='magnolia'){
         for(let i=0;i<6;i++){const a=-Math.PI/2+i*TAU/6,px=cx+Math.cos(a)*4.4,py=cy+Math.sin(a)*4.4;ellipse(px,py,3.1,7.5,a,colors.petal,colors.petalLight)}
         ellipse(cx,cy,2.3,2.3,0,colors.center,colors.seed);
+      }else if(id==='passionflower'){
+        radial(cx,cy,{count:10,core:3,outer:11,half:.36,taper:-.004,scallop:.25,phase:-Math.PI/2,disk:false});
+        for(let i=0;i<20;i++){const a=-Math.PI/2+i*TAU/20,inner=3.4,outer=i%2===0?9.8:8.4,x1=cx+Math.cos(a)*inner,y1=cy+Math.sin(a)*inner,x2=cx+Math.cos(a)*outer,y2=cy+Math.sin(a)*outer;line(x1,y1,x2,y2,i%2?colors.petalLight:colors.petalShade)}
+        ellipse(cx,cy,2.8,2.8,0,colors.centerDark,colors.center);for(let i=0;i<3;i++){const a=-Math.PI/2+i*TAU/3;line(cx,cy,cx+Math.cos(a)*6,cy+Math.sin(a)*6,colors.center);put(cx+Math.cos(a)*6,cy+Math.sin(a)*6,colors.seed)}
+      }else if(id==='protea'){
+        radial(cx,cy,{count:14,core:4.2,outer:12,half:.17,taper:.018,scallop:.8,phase:-Math.PI/2,disk:false});
+        radial(cx,cy,{count:11,core:3.2,outer:8.2,half:.22,taper:.008,scallop:.35,phase:-Math.PI/2+.14,disk:false});
+        ellipse(cx,cy,3.3,3.3,0,colors.center,colors.centerDark);for(let i=0;i<10;i++){const a=i*TAU/10;put(cx+Math.cos(a)*2,cy+Math.sin(a)*2,colors.seed)}
+      }else if(id==='aquilegia'){
+        radial(cx,cy,{count:5,core:1.8,outer:8.4,half:.3,taper:-.012,scallop:.35,phase:-Math.PI/2,disk:false});
+        const spurs=[[17,15,17,26],[12,13,5,18],[22,13,29,18],[13,16,7,24],[21,16,27,24]];spurs.forEach(([x1,y1,x2,y2],i)=>{line(x1,y1,x2,y2,i%2?colors.petal:colors.petalShade);put(x2,y2,colors.petalLight)});
+        ellipse(cx,cy,2.2,2.2,0,colors.center,colors.seed);
+      }else if(id==='poinsettia'){
+        radial(cx,cy,{count:7,core:2.1,outer:11.8,half:.24,taper:-.03,scallop:.5,phase:-Math.PI/2,disk:false});
+        radial(cx,cy,{count:5,core:1.1,outer:6.4,half:.3,taper:-.02,scallop:.4,phase:-Math.PI/2+.25,disk:false});
+        for(let i=0;i<7;i++){const a=-Math.PI/2+i*TAU/7;ellipse(cx+Math.cos(a)*2.5,cy+Math.sin(a)*2.5,1.5,1.5,0,colors.center,colors.seed)}
+      }else if(id==='lantana'){
+        const florets=[[17,5],[11,7],[23,7],[7,12],[15,11],[23,12],[11,17],[18,17],[27,16],[17,21]];
+        florets.forEach(([x,y],i)=>{const old=colors.petal;colors.petal=i%3===0?colors.petalShade:i%3===1?colors.petal:colors.petalLight;tinyFloret(x,y,2);colors.petal=old});
+      }else if(id==='amaryllis'){
+        const flowers=[{x:17,y:11,scale:1},{x:8,y:15,scale:.72},{x:26,y:15,scale:.72}];
+        flowers.forEach(({x,y,scale})=>{radial(x,y,{count:6,core:1.6,outer:8*scale,half:.34,taper:-.005,scallop:.35,phase:-Math.PI/2,disk:false});line(x,y+1,x,y+5,colors.petalShade);line(x-1,y+5,x+1,y+5,colors.center);put(x,y+3,colors.seed)})
+      }else if(id==='morningglory'){
+        radial(cx,cy,{count:5,core:0,outer:12,half:.57,taper:.003,scallop:.45,phase:-Math.PI/2,disk:false});
+        ellipse(cx,cy+1,5.2,5.2,0,colors.petalLight,colors.seed);ellipse(cx,cy,1.5,1.5,0,colors.center,colors.petalLight);
+        for(let i=0;i<5;i++){const a=-Math.PI/2+i*TAU/5;line(cx+Math.cos(a)*5,cy+Math.sin(a)*5,cx+Math.cos(a)*10,cy+Math.sin(a)*10,colors.petalShade)}
+      }else if(id==='nasturtium'){
+        ellipse(17,7,5.2,4.4,-.1,colors.petal,colors.petalLight);ellipse(10,11,5.7,3.5,-.45,colors.petalShade,colors.petalLight);ellipse(24,11,5.7,3.5,.45,colors.petal,colors.petalLight);
+        ellipse(12,16,4.8,3.6,.45,colors.petalLight,colors.petal);ellipse(22,16,4.8,3.6,-.45,colors.petal,colors.petalShade);
+        line(17,14,17,23,colors.petalShade);line(16,18,18,23,colors.petalLight);ellipse(17,12,2.3,2.3,0,colors.center,colors.seed);
+      }else if(id==='calendula'){
+        radial(cx,cy,{count:28,core:2.7,outer:12,half:.108,taper:.004,scallop:.85,phase:-Math.PI/2,disk:false});
+        radial(cx,cy,{count:18,core:1.4,outer:7.5,half:.15,taper:.002,scallop:.45,phase:-Math.PI/2+.11,disk:false});
+        ellipse(cx,cy,2.2,2.2,0,colors.center,colors.seed);
+      }else if(id==='forgetmenot'){
+        [[8,8],[18,5],[27,11],[13,17],[23,21],[5,20]].forEach(([x,y])=>{radial(x,y,{count:5,core:.65,outer:3.2,half:.35,scallop:.16,phase:-Math.PI/2,disk:false});put(x,y,colors.center);put(x+1,y,colors.seed)});
+      }else if(id==='bougainvillea'){
+        const bracts=[[[7,7],[14,5],[13,14]],[[16,3],[23,7],[16,12]],[[21,12],[29,10],[25,19]],[[7,15],[14,13],[13,22]]];
+        bracts.forEach((points,i)=>{polygon(points,i%2?colors.petal:colors.petalShade);line(points[0][0],points[0][1],points[2][0],points[2][1],colors.petalLight)});
+        [[14,8],[19,8],[21,15],[12,17]].forEach(([x,y])=>{put(x,y,colors.center);put(x+1,y,colors.petalLight)});
+      }else if(id==='helleborus'){
+        for(let i=0;i<5;i++){const a=-Math.PI/2+i*TAU/5,px=cx+Math.cos(a)*3.4,py=cy+Math.sin(a)*3.4;ellipse(px,py,4.2,7,a,colors.petal,colors.petalLight)}
+        ellipse(cx,cy,3,3,0,colors.center,colors.centerDark);
+        for(let i=0;i<12;i++){const a=i*TAU/12;line(cx,cy,cx+Math.cos(a)*5,cy+Math.sin(a)*5,colors.seed)}
+      }else if(id==='sweetpea'){
+        ellipse(17,7,7,5.3,-.12,colors.petalLight,colors.petal);ellipse(10,12,6,4,-.38,colors.petalShade,colors.petalLight);
+        ellipse(24,12,6,4,.38,colors.petal,colors.petalLight);polygon([[12,15],[17,13],[22,15],[19,21],[15,20]],colors.petal);
+        line(17,7,17,12,colors.petalShade);line(11,12,16,15,colors.petalLight);put(17,16,colors.center);
+      }else if(id==='fuchsia'){
+        polygon([[12,5],[15,11],[17,13],[19,11],[22,5],[20,13],[17,16],[14,13]],colors.center);
+        polygon([[14,11],[20,11],[23,16],[21,21],[17,24],[13,21],[11,16]],colors.petal);
+        polygon([[13,11],[17,15],[21,11],[19,7],[17,5],[15,7]],colors.petalShade);
+        line(15,15,15,22,colors.petalLight);line(17,16,18,25,colors.seed);line(19,15,21,22,colors.seed);
       }
     }
     body();paintHead();
@@ -338,4 +436,5 @@
   function drawCanvas(ctx,id,x,y,cell,progress=1,variant=0){ctx.imageSmoothingEnabled=false;const floor=HEIGHT*(1-Math.max(0,Math.min(1,progress)));pixelsFor(id,variant).forEach(p=>{if(p.y<floor)return;ctx.fillStyle=p.color;ctx.fillRect(Math.round(x+p.x*cell),Math.round(y+p.y*cell),Math.ceil(cell),Math.ceil(cell))})}
   window.FlowerArt={width:WIDTH,height:HEIGHT,renderSvg,drawCanvas};
 })();
+
 

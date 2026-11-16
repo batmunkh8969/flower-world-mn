@@ -4,7 +4,7 @@ A Mongolian pixel garden and flower learning game.
 
 Public site: <https://batmunkh8969.github.io/flower-world-mn/>
 
-The page is a static Mongolian pixel garden with 45 illustrated learning profiles and a separate, on-demand scientific-name index. The index contains 365,813 accepted species records from the WCVP v16 taxon file. WCVP covers vascular plants, so the index includes flowering plants as well as non-flowering ferns and gymnosperms. A name record does not imply a custom illustration, Mongolian common name, or species-level identification guide.
+The page is a static Mongolian pixel garden with 59 individually drawn flower profiles, a field-guide panel, and a separate on-demand scientific-name index. The garden lets visitors choose among seven settings, four planting layouts, four sky color moods, ten flower palettes, adjustable bloom size, and wind animation. Outdoor stems root at their own ground positions; only the patio scene gathers them into a pot. The index contains 365,813 accepted vascular-plant names from the WCVP v16 taxon file. It includes flowering plants and non-flowering ferns and gymnosperms. A name record does not imply a custom illustration, Mongolian common name, or species-level identification guide.
 
 ## Data credit
 
@@ -23,4 +23,5 @@ The script writes letter shards and the manifest into both `plant-index/` and `d
 ## Hosting
 
 The GitHub Pages version is public at the link above. Search engine crawling can take time, and inclusion is not guaranteed. A branded `www` address requires a domain owner and DNS changes; GitHub Pages supports that once the domain is configured in the repository.
+
 
