@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="mn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5efd9">
+  <meta name="description" content="Монгол хэл дээр цэцэг сонгож, пикселэн баглаа урлан, цэцэг таних тоглоом тоглоорой.">
+  <title>Цэцгийн бяцхан ертөнц · Баглаа урлах</title>
+  <link rel="stylesheet" href="./bloom.css">
+  <style>
+    :root{color-scheme:light;--ink:#263a31;--muted:#5d7164;--paper:#fffbed;--cream:#f5efd9;--sage:#dce8bf;--line:#3b5745;--leaf:#5d8856;--pink:#c96073;--gold:#e6ba52;--shadow:#b5c49b}
+    *{box-sizing:border-box}
+    html{width:100%;max-width:100%;overflow-x:clip;scroll-behavior:smooth;scroll-padding-top:82px}
+    body{width:100%;max-width:100%;margin:0;overflow-x:clip;background:var(--cream);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+    button,a{font:inherit}
+    button{color:inherit;cursor:pointer}
+    a{color:inherit}
+    :focus-visible{outline:3px solid #ae4557;outline-offset:4px}
+    @supports not (overflow-x:clip){html,body{overflow-x:hidden}}
+    [hidden]{display:none!important}
+    .wrap{width:min(1240px,100%);margin-inline:auto;padding-inline:clamp(18px,3.5vw,48px)}
+    .top{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:18px;min-height:72px;background:rgba(245,239,217,.97);border-bottom:1px solid #cbd3b3;backdrop-filter:blur(12px)}
+    .brand{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:900;letter-spacing:.07em;text-decoration:none}
+    .brand-mark{color:var(--pink);font-size:26px;line-height:1}
+    .top-note{color:#6d7c67;font-size:11px;font-weight:850;letter-spacing:.14em}
+    .top-link{padding:6px 0;border-bottom:2px solid #98aa82;font-size:13px;font-weight:800;text-decoration:none}
+    .hero{background:#e6edcf;border-bottom:2px solid var(--line)}
+    .hero-layout{display:grid;grid-template-columns:minmax(290px,.78fr) minmax(570px,1.22fr);align-items:center;gap:38px;min-width:0;min-height:690px;padding-block:42px}
+    .hero-layout>*{min-width:0}
+    .eyebrow{color:#627b56;font-size:11px;font-weight:900;letter-spacing:.17em}
+    .hero h1{margin:16px 0 18px;font:600 clamp(48px,6.7vw,82px)/.98 Georgia,serif;letter-spacing:-.055em}
+    .hero h1 em{color:#a34e5b;font-weight:500}
+    .hero-copy>p{max-width:440px;margin:0;color:#536a58;line-height:1.8}
+    .hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:26px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:12px 19px;border:2px solid var(--line);background:#568451;color:#fff;font-weight:850;line-height:1.2;text-decoration:none;box-shadow:4px 4px 0 var(--line);transition:transform .16s,box-shadow .16s,background .16s}
+    .btn:hover{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--line);background:#467448}
+    .btn:active{transform:translate(4px,4px);box-shadow:none}
+    .btn-ghost{background:var(--paper);color:var(--ink)}
+    .btn-ghost:hover{background:#fff3cd}
+    .hero-aside{margin:20px 0 0;color:#6e8068;font-size:12px;font-weight:750}
+    .hero-art{width:100%;min-width:0}
+    .section{padding-block:88px}
+    .section-heading{display:grid;grid-template-columns:1fr minmax(270px,.75fr);align-items:end;gap:26px;margin-bottom:30px}
+    .book-heading{grid-template-columns:minmax(0,1fr) minmax(240px,.75fr) auto}
+    .section h2{margin:8px 0 0;font:600 clamp(36px,4.8vw,54px)/1.05 Georgia,serif;letter-spacing:-.045em}
+    .section-heading>p{max-width:410px;margin:0;color:var(--muted)}
+    .game-bg{background:#f8f3e4}
+    .game-shell{display:grid;grid-template-columns:minmax(310px,.86fr) minmax(0,1.14fr);border:2px solid var(--line);background:var(--paper);box-shadow:8px 8px 0 var(--shadow);overflow:hidden}
+    .game-visual{position:relative;display:grid;place-items:center;min-height:680px;overflow:hidden;background:#dce9c4;border-right:2px solid var(--line)}
+    .game-visual:before{position:absolute;inset:0;content:"";background-image:radial-gradient(#8eac75 1.25px,transparent 1.25px);background-size:24px 24px;opacity:.28}
+    .frame-tag{position:absolute;top:20px;left:22px;z-index:2;padding:7px 10px;background:#fff8df;border:1px solid #819770;color:#4a654d;font-size:10px;font-weight:900;letter-spacing:.12em}
+    .unknown-state{position:relative;z-index:1;display:grid;justify-items:center;gap:12px;max-width:260px;padding:24px;text-align:center}
+    .unknown-state svg{width:124px;height:124px;image-rendering:pixelated;shape-rendering:crispEdges;filter:drop-shadow(5px 5px 0 #b7ca99)}
+    .unknown-state strong{font:600 27px/1.1 Georgia,serif}
+    .unknown-state span{color:#647764;font-size:13px}
+    .flower-art{position:relative;z-index:1;display:grid;place-items:center;width:min(72%,350px);filter:drop-shadow(7px 8px 0 #b3c99b);animation:arrive .45s steps(5,end) both}
+    .flower-art svg{display:block;width:100%;height:auto;image-rendering:pixelated;shape-rendering:crispEdges}
+    @keyframes arrive{from{transform:translateY(12px) scale(.94);opacity:.4}to{transform:translateY(0) scale(1);opacity:1}}
+    .art-ground{position:absolute;bottom:59px;width:66%;height:8px;background:#9ebd81;box-shadow:0 8px 0 #bed39a}
+    .visual-caption{position:absolute;right:18px;bottom:18px;left:18px;z-index:2;color:#536f56;font-size:10px;font-weight:900;letter-spacing:.12em;text-align:center}
+    .game-content{min-width:0;padding:34px 36px 38px}
+    .intro{max-width:600px;padding-block:34px}
+    .soft-pill{display:inline-block;padding:6px 9px;border:1px solid #a2b18f;background:#f7f8e9;color:#4d694e;font-size:10px;font-weight:900;letter-spacing:.09em}
+    .game-content h3{margin:12px 0;font:600 clamp(28px,3.3vw,38px)/1.1 Georgia,serif;letter-spacing:-.03em}
+    .game-content p{color:var(--muted)}
+    .game-content .game-tiny{font-size:13px;line-height:1.65}
+    .game-content .btn{margin-top:10px}
+    .progress-line{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:18px;color:#526b56;font-size:12px;font-weight:850;letter-spacing:.05em}
+    .progress-line progress{width:46%;height:9px;accent-color:#689457}
+    .game-kicker{color:#967550;font-size:10px;font-weight:900;letter-spacing:.16em}
+    .question-title{margin-block:8px 16px!important}
+    .field-report{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 17px}
+    .field-cue{min-width:0;padding:12px 13px;background:#f5f2df;border-left:3px solid #bd9a58}
+    .field-cue strong{display:block;margin-bottom:4px;color:#796340;font-size:10px;letter-spacing:.1em}
+    .field-cue p{margin:0;color:#455c4c;font-size:13px;line-height:1.55}
+    .choose-label{margin:17px 0 8px;color:#647665;font-size:11px;font-weight:850;letter-spacing:.08em}
+    .options{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .option{display:flex;align-items:center;gap:11px;min-width:0;min-height:106px;padding:8px 11px;border:2px solid #bac8ad;background:#fcfaed;text-align:left;transition:transform .15s,border-color .15s,background .15s,box-shadow .15s}
+    .option:hover:not(:disabled){transform:translateY(-2px);border-color:#617f5a;background:#f1f5df;box-shadow:0 3px 0 #c0cca8}
+    .option svg{flex:0 0 56px;width:56px;height:72px;image-rendering:pixelated;shape-rendering:crispEdges}
+    .option-copy{display:grid;gap:5px;min-width:0}
+    .option-copy strong{font-size:14px;line-height:1.25}
+    .option-copy small{color:#71806c;font-size:10px;line-height:1.4}
+    .option.correct{border-color:#5e9360;background:#e2efcf}
+    .option.wrong{border-color:#ca8578;background:#fae6dd}
+    .option:disabled{cursor:default}
+    .feedback{min-height:23px;margin:12px 0 0!important;color:#315c3c!important;font-size:14px;font-weight:800}
+    .feedback.wrong-text{color:#9b4d47!important}
+    .answer-reveal{margin-top:12px;padding:13px 15px;background:#e8efd6;border:1px solid #bdcaa6}
+    .answer-reveal strong{display:block;margin-bottom:4px;font-size:11px;letter-spacing:.08em}
+    .answer-reveal p{margin:0!important;color:#435c48!important;font-size:13px;line-height:1.6}
+    .next{margin-top:14px!important}
+    .button-row{display:flex;flex-wrap:wrap;gap:13px;margin-top:18px}
+    .book{background:#dbe7c6;border-block:2px solid var(--line)}
+    .mini-tag{align-self:start;justify-self:end;padding:6px 10px;border:1px solid #91a47d;color:#526c50;font-size:10px;font-weight:900;letter-spacing:.1em;white-space:nowrap}
+    .library-tools{display:flex;align-items:end;justify-content:space-between;gap:18px;margin:-8px 0 18px}
+    .search-box{display:grid;gap:5px;width:min(380px,100%)}
+    .search-box span{color:#5c7157;font-size:10px;font-weight:900;letter-spacing:.12em}
+    .search-box input{width:100%;min-height:46px;padding:10px 12px;border:2px solid #8ca17b;background:#fffbed;color:var(--ink);font:inherit;font-size:14px}
+    .library-count{margin:0;color:#61745e;font-size:12px;font-weight:800}
+    .flower-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
+    .flower-card{display:grid;justify-items:start;min-width:0;padding:12px;border:2px solid #566f51;background:#fcf9ed;text-align:left;box-shadow:3px 3px 0 #a7b88f;transition:transform .15s,box-shadow .15s,background .15s}
+    .flower-card:hover,.flower-card[aria-pressed="true"]{transform:translateY(-3px);box-shadow:3px 6px 0 #95aa7d;background:#fff3ce}
+    .flower-card svg{display:block;justify-self:center;width:100%;height:130px;image-rendering:pixelated;shape-rendering:crispEdges}
+    .flower-card strong{font-size:13px;line-height:1.35}
+    .flower-card span{margin-top:4px;color:#677c63;font-size:10px;line-height:1.4}
+    .empty-library{grid-column:1/-1;padding:26px;border:1px dashed #8da27b;color:#5e725c;font-size:14px}
+    .field-note{display:grid;grid-template-columns:minmax(170px,.65fr) minmax(0,1.35fr);gap:24px;margin-top:22px;padding:20px;background:#fffbef;border:2px solid #526b51}
+    .book-art{display:grid;place-items:center;min-height:235px;background:#141a1a;border:1px solid #35493c}
+    .book-art svg{width:min(160px,76%);height:205px;image-rendering:pixelated;shape-rendering:crispEdges}
+    .book-copy{min-width:0}
+    .book-number{color:#6c835c;font-size:10px;font-weight:900;letter-spacing:.13em}
+    .field-note h3{margin:4px 0;font:600 30px/1.12 Georgia,serif}
+    .latin{margin-bottom:15px;color:#788777;font-size:12px;font-style:italic}
+    .book-facts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .book-fact{padding:12px;background:#f6f1dd;border-left:3px solid #8ba378}
+    .book-fact strong{display:block;margin-bottom:4px;color:#6c7658;font-size:10px;letter-spacing:.08em}
+    .book-fact p{margin:0;color:#516454;font-size:13px;line-height:1.6}
+    .book-source{display:inline-block;margin-top:13px;color:#52764d;font-size:12px;font-weight:800;text-underline-offset:3px}
+    .read-note{max-width:850px;margin:17px 0 0;color:#61745e;font-size:12px;line-height:1.7}
+    .footer{display:flex;justify-content:space-between;gap:18px;padding-block:28px 38px;color:#71806a;font-size:12px}
+    .footer p{margin:0}
+    .footer strong{color:#425d47}
+    .noscript{margin:0;padding:18px;background:#fff2d7}
+    @media(max-width:1120px){.hero-layout{grid-template-columns:1fr;gap:28px;padding-block:42px}.hero-copy{max-width:700px}.hero-art{max-width:940px}.game-shell{grid-template-columns:minmax(260px,.75fr) minmax(0,1.25fr)}.game-content{padding:28px}.flower-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+    @media(max-width:720px){html{scroll-padding-top:68px}.top{min-height:64px}.top-note{display:none}.section{padding-block:62px}.section-heading{grid-template-columns:1fr;gap:12px}.section-heading>p{max-width:600px}.mini-tag{justify-self:start}.library-tools{align-items:stretch;flex-direction:column;gap:8px}.game-shell{grid-template-columns:1fr}.game-visual{min-height:360px;border-right:0;border-bottom:2px solid var(--line)}.flower-art{width:min(62%,260px)}.game-content{padding:26px 22px 30px}.options{gap:8px}.option{min-height:96px;padding:7px}.option svg{flex-basis:48px;width:48px;height:64px}.field-note{grid-template-columns:150px 1fr;gap:15px}.book-art{min-height:210px}.book-art svg{height:175px}.flower-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+    @media(max-width:500px){.hero h1{font-size:52px}.hero-layout{min-height:0;padding-block:38px}.hero-actions .btn{width:100%}.section{padding-block:52px}.game-visual{min-height:300px}.frame-tag{left:14px;top:14px}.unknown-state svg{width:104px;height:104px}.unknown-state strong{font-size:24px}.progress-line{font-size:10px}.progress-line progress{width:40%}.field-report{grid-template-columns:1fr}.options{grid-template-columns:1fr}.option{min-height:86px}.option svg{flex-basis:58px;width:58px;height:72px}.flower-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.flower-card{padding:9px}.flower-card svg{height:114px}.field-note{grid-template-columns:1fr}.book-art{min-height:190px}.book-art svg{height:165px}.book-facts{grid-template-columns:1fr}.footer{display:block}.footer p+p{margin-top:8px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.flower-art{animation:none}*,*:before,*:after{transition-duration:.01ms!important}}
+  </style>
+</head>
+<body>
+  <header class="wrap top">
+    <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true">✿</span> ЦЭЦГИЙН ЕРТӨНЦ</a>
+    <span class="top-note">ЖИЖИГ НЭЭЛТҮҮДИЙН ТЭМДЭГЛЭЛ</span>
+    <a class="top-link" href="#book">Цэцгийн дэвтэр ↓</a>
+  </header>
+  <main id="top">
+    <section class="hero" id="bouquet" aria-labelledby="page-title">
+      <div class="wrap hero-layout">
+        <div class="hero-copy">
+          <div class="eyebrow">✦ УРЛАХ · СОНГОХ · СУРАХ</div>
+          <h1 id="page-title">Цэцэгсээр<br><em>өөрийн</em><br>баглаа урла.</h1>
+          <p>24 цэцгийн хэлбэрийг 10 өнгөөр хослуулаад 240 хувилбараас өөрийн баглааг бүтээ. Ваараа ч бас өөрийнхөөрөө чимэглээд, дараа нь цэцгээ таньж сураарай.</p>
+          <div class="hero-actions"><a class="btn" href="#bouquet">Баглаа урлаж эхлэх ↓</a><a class="btn btn-ghost" href="#play">Цэцэг таних тоглоом</a></div>
+          <p class="hero-aside">✿ Таалагдсан цэцгээ сонго. Баглаандаа нэмээд, хүсвэл буцааж аваарай.</p>
+        </div>
+        <div class="hero-art bloom-exhibit" id="bloom-exhibit" aria-label="Дарж дэлгэрүүлж болох пикселэн цэцэг"></div>
+      </div>
+    </section>
+    <section class="section game-bg" id="play" aria-labelledby="play-title">
+      <div class="wrap">
+        <div class="section-heading"><div><div class="eyebrow">01 / ТОГЛООМ</div><h2 id="play-title">Шинжээр нь тань.</h2></div><p>24 цэцгийн сангаас энэ удаад таван өөр цэцэг санамсаргүй гарна. Тайлбарыг уншаад дөрвөн өөр хэлбэрийн пиксел зураг дундаас олоорой.</p></div>
+        <div class="game-shell">
+          <div class="game-visual" aria-label="Таних даалгаврын цэцгийн талбай">
+            <span class="frame-tag" id="visual-tag">ТАЛБАЙН ТЭМДЭГЛЭЛ</span>
+            <div class="art-ground" id="art-ground" aria-hidden="true"></div>
+            <div class="unknown-state" id="unknown-state" aria-hidden="true">
+              <svg viewBox="0 0 16 16" role="presentation" shape-rendering="crispEdges"><rect x="6" y="1" width="4" height="2" fill="#698e60"/><rect x="3" y="3" width="2" height="3" fill="#698e60"/><rect x="11" y="3" width="2" height="3" fill="#698e60"/><rect x="1" y="7" width="3" height="2" fill="#698e60"/><rect x="12" y="7" width="3" height="2" fill="#698e60"/><rect x="5" y="5" width="6" height="6" fill="#e1ba52"/><rect x="7" y="12" width="2" height="3" fill="#50764e"/><rect x="4" y="14" width="3" height="1" fill="#83a66d"/><rect x="9" y="14" width="3" height="1" fill="#83a66d"/></svg>
+              <strong>Ургамлаа ажигла.</strong><span>Дүрсийг сонгосны дараа томоор дэлгэрүүлнэ.</span>
+            </div>
+            <div class="flower-art" id="game-art" hidden aria-hidden="true"></div>
+            <span class="visual-caption" id="visual-caption">✦ УНШ · ХАРЬЦУУЛ · СОНГО</span>
+          </div>
+          <div class="game-content">
+            <div class="intro" id="intro"><span class="soft-pill">24 ЦЭЦГИЙН САН · 5 САНАМСАРГҮЙ ДААЛГАВАР</span><h3>Бяцхан аялал эхэлье.</h3><p>Тойрог бүрд нэг өөр цэцгийг таних тэмдгээр нь тайлбарлана. Доор гарах зургуудын дэлбээ, төв, навч болон нийт хэлбэрийг харьцуулж сонгоорой.</p><p class="game-tiny">Дараагийн тоглоход цэцгийн сонголт өөрчлөгдөнө. Алдсан сонголтоо хасаад дахин оролдож болно.</p><button class="btn" id="start" type="button">Тоглож эхлэх →</button></div>
+            <div id="round" hidden>
+              <div class="progress-line"><span id="round-number">01 / 05</span><progress id="round-progress" value="0" max="5" aria-label="Тоглоомын явц"></progress></div>
+              <div class="game-kicker">НЭРГҮЙ ТАЛБАЙН ТЭМДЭГЛЭЛ</div>
+              <h3 class="question-title" id="question-title" tabindex="-1">Шинжийг уншаад олоорой.</h3>
+              <div class="field-report"><div class="field-cue"><strong>ДЭЛБЭЭ · ТӨВ</strong><p id="clue-appearance"></p></div><div class="field-cue"><strong>НАВЧ · ИШ</strong><p id="clue-leaves"></p></div></div>
+              <div class="choose-label">ЗӨВ ЗУРГИЙГ СОНГООРОЙ · 4 СОНГОЛТ</div>
+              <div class="options" id="options" role="group" aria-label="Цэцгийн зургуудаас сонгох"></div>
+              <p class="feedback" id="feedback" role="status" aria-live="polite"></p>
+              <div class="answer-reveal" id="answer-reveal" hidden><strong id="answer-title"></strong><p id="answer-fact"></p></div>
+              <button class="btn next" type="button" id="next" hidden>Дараагийн тэмдэглэл →</button>
+            </div>
+            <div id="finish" hidden><div class="game-kicker">АЯЛАЛ ДУУСЛАА ✦</div><h3>Цэцгийн мөрдөгч боллоо!</h3><p id="score" class="completion-points"></p><p>Дэвтрээсээ таних тэмдгүүдээ дахин харж, тоглоомоо шинээр эхлүүлж болно.</p><div class="button-row"><button class="btn" id="restart" type="button">Дахин тоглох ↻</button><a href="#book" class="btn btn-ghost">Дэвтрээ нээх ↓</a></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section book" id="book" aria-labelledby="book-title">
+      <div class="wrap">
+        <div class="section-heading book-heading"><div><div class="eyebrow">02 / ЦЭЦГИЙН ДЭВТЭР</div><h2 id="book-title">Жаахан ойроос харъя.</h2></div><p>Нэг цэцэг дахин давтагдсан өнцгүүд биш: хонх, түрүү, салаа мөчир, том дан цэцэг зэрэг өөр өөр ургалтын хэлбэртэй 24 тэмдэглэл.</p><span class="mini-tag">24 ПИКСЕЛЭН ТЭМДЭГЛЭЛ ✿</span></div>
+        <div class="library-tools"><label class="search-box" for="flower-search"><span>НЭР ЭСВЭЛ ЛАТИН НЭРЭЭР ХАЙХ</span><input id="flower-search" type="search" autocomplete="off" placeholder="Жишээ нь: сарнай, лаванда, Rosa…"></label><p class="library-count" id="library-count" role="status" aria-live="polite"></p></div>
+        <div class="flower-grid" id="flower-grid" aria-label="Цэцгийн дэвтэр"></div>
+        <article class="field-note" aria-live="polite">
+          <div class="book-art" id="book-art" aria-hidden="true"></div>
+          <div class="book-copy"><div class="book-number">МИНИЙ ДЭВТЭР / <span id="book-number">01</span></div><h3 id="book-name"></h3><div class="latin" id="book-latin"></div><div class="book-facts"><div class="book-fact"><strong>ДЭЛБЭЭ · ТӨВ</strong><p id="book-appearance"></p></div><div class="book-fact"><strong>НАВЧ · ИШ</strong><p id="book-leaves"></p></div><div class="book-fact"><strong>СОНИРХОЛТОЙ НЬ</strong><p id="book-detail"></p></div><div class="book-fact"><strong>ТАНИХ ТҮЛХҮҮР</strong><p id="book-signature"></p></div></div><a class="book-source" id="book-source" target="_blank" rel="noopener noreferrer">Ургамлын эх сурвалжийг нээх ↗</a></div>
+        </article>
+        <p class="read-note">Цэцгийг бодит орчинд танихдаа өнгөнөөс гадна хэлбэр, төв, навч, ишийг хамтад нь ажиглаарай. Зургууд нь суралцахад зориулсан хялбаршуулсан пикселэн дүрслэл бөгөөд сорт, ургалтын нөхцлөөс хамаарч бодит цэцгийн өнгө өөр байж болно.</p>
+      </div>
+    </section>
+  </main>
+  <footer class="wrap footer"><p><strong>✿ Цэцгийн бяцхан ертөнц</strong> · Сониуч зангаа цэцэглүүлээрэй.</p><p>Цэцгийн баримтын эх сурвалжийг сонголт бүр дээр дурдав.</p></footer>
+  <noscript><p class="noscript">Тоглоом ажиллахын тулд хөтчийн JavaScript-ийг идэвхжүүлнэ үү.</p></noscript>
+  <script src="./flower-art.js"></script>
+  <script src="./flower-data.js"></script>
+  <script src="./bloom.js"></script>
+  <script>
+    (()=>{'use strict';
+      const flowers=window.flowerData;
+      const $=id=>document.getElementById(id),shuffle=list=>{const out=[...list];for(let i=out.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[out[i],out[j]]=[out[j],out[i]]}return out};
+      const grid=$('flower-grid');let activeBook=0,order=[],current=0,score=0,attempts=0,answered=false;
+      function addCard(f,index){const button=document.createElement('button');button.type='button';button.className='flower-card';button.dataset.flowerId=f.id;button.setAttribute('aria-pressed',String(index===activeBook));button.innerHTML=FlowerArt.renderSvg(f.id)+'<strong>'+f.name+'</strong><span>'+f.signature+'</span>';button.addEventListener('click',()=>showFlower(index));grid.append(button)}
+      function renderCards(){const query=$('flower-search').value.trim().toLocaleLowerCase();const matches=flowers.map((flower,index)=>({flower,index})).filter(item=>!query||(item.flower.name+' '+item.flower.latin+' '+item.flower.signature).toLocaleLowerCase().includes(query));grid.replaceChildren();$('library-count').textContent=matches.length+' / '+flowers.length+' цэцэг';if(matches.length===0){const empty=document.createElement('p');empty.className='empty-library';empty.textContent='Ийм нэртэй цэцэг олдсонгүй. Нэрийг монгол эсвэл латин үсгээр дахин хайгаарай.';grid.append(empty);return}matches.forEach(item=>addCard(item.flower,item.index))}
+      function showFlower(index){const f=flowers[index];activeBook=index;$('book-art').innerHTML=FlowerArt.renderSvg(f.id);$('book-number').textContent=String(index+1).padStart(2,'0');$('book-name').textContent=f.name;$('book-latin').textContent=f.latin;$('book-appearance').textContent=f.appearance;$('book-leaves').textContent=f.leaves;$('book-detail').textContent=f.detail;$('book-signature').textContent=f.signature;$('book-source').href=f.source;[...grid.children].forEach(card=>card.setAttribute('aria-pressed',String(card.dataset.flowerId===f.id)))}
+      function start(){order=shuffle(flowers).slice(0,5);current=0;score=0;$('intro').hidden=true;$('finish').hidden=true;$('round').hidden=false;renderRound()}
+      function renderRound(){
+        const f=order[current];attempts=0;answered=false;$('visual-tag').textContent='ДААЛГАВАР '+String(current+1).padStart(2,'0')+' / 05';$('visual-caption').textContent='✦ УНШ · ХАРЬЦУУЛ · СОНГО';$('game-art').hidden=true;$('game-art').innerHTML='';$('unknown-state').hidden=false;$('art-ground').hidden=false;
+        $('round-number').textContent=String(current+1).padStart(2,'0')+' / 05 · ТЭМДЭГЛЭЛ';$('round-progress').value=current;$('clue-appearance').textContent=f.appearance;$('clue-leaves').textContent=f.leaves;$('feedback').textContent='';$('feedback').className='feedback';$('answer-reveal').hidden=true;$('next').hidden=true;
+        const answers=shuffle([f,...shuffle(flowers.filter(item=>item.id!==f.id)).slice(0,3)]);$('options').replaceChildren();
+        answers.forEach(choice=>{const button=document.createElement('button');button.type='button';button.className='option';button.setAttribute('aria-label',choice.name+', '+choice.signature);button.innerHTML=FlowerArt.renderSvg(choice.id)+'<span class="option-copy"><strong>'+choice.name+'</strong><small>'+choice.signature+'</small></span>';button.addEventListener('click',()=>choose(choice,button));$('options').append(button)});
+        $('question-title').focus({preventScroll:true});
+      }
+      function choose(choice,button){
+        if(answered)return;attempts++;const answer=order[current];
+        if(choice.id===answer.id){
+          answered=true;if(attempts===1)score++;button.classList.add('correct');[...$('options').children].forEach(item=>item.disabled=true);
+          $('feedback').className='feedback';$('feedback').textContent='Зөв танилаа! Энэ бол '+answer.name+' ('+answer.latin+').';
+          $('answer-title').textContent='НЭМЭЛТ БАРИМТ · '+answer.name.toUpperCase();$('answer-fact').textContent=answer.detail;$('answer-reveal').hidden=false;$('round-progress').value=current+1;
+          $('unknown-state').hidden=true;$('game-art').innerHTML=FlowerArt.renderSvg(answer.id);$('game-art').hidden=false;$('art-ground').hidden=false;$('visual-tag').textContent=answer.name.toUpperCase();$('visual-caption').textContent='✿ '+answer.signature.toUpperCase();
+          $('next').hidden=false;$('next').textContent=current===order.length-1?'Үр дүн харах →':'Дараагийн тэмдэглэл →';
+        }else{button.classList.add('wrong');button.disabled=true;$('feedback').className='feedback wrong-text';$('feedback').textContent='Энэ зураг '+choice.name+' байна. '+choice.signature+'. Тэмдэглэлийг дахин уншаад өөр сонголтоо туршаарай.'}
+      }
+      $('next').addEventListener('click',()=>{current++;if(current<order.length){renderRound();return}$('round').hidden=true;$('finish').hidden=false;$('visual-tag').textContent='АЯЛАЛ ДУУСЛАА ✦';$('visual-caption').textContent='✿ ЦЭЦЭГ БҮР ӨӨРИЙН ТАНИХ ТЭМДЭГТЭЙ';$('unknown-state').hidden=true;$('game-art').innerHTML=FlowerArt.renderSvg(order[order.length-1].id);$('game-art').hidden=false;$('score').textContent='Энэ удаагийн 5 даалгавраас '+score+'-ыг нь эхний оролдлогоор зөв танилаа. Дэвтэрт '+flowers.length+' өөр цэцэг бий.';$('restart').focus({preventScroll:true})});
+      $('flower-search').addEventListener('input',renderCards);$('start').addEventListener('click',start);$('restart').addEventListener('click',start);renderCards();showFlower(0);
+    })();
+  </script>
+</body>
+</html>
+
