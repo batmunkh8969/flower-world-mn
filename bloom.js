@@ -107,7 +107,7 @@
       12:[[-104,124],[-52,110],[0,106],[52,110],[104,124],[-132,161],[-88,143],[-44,169],[0,145],[44,169],[88,143],[132,161]]
     };
     const size=count<=1?94:count<=3?84:count<=5?76:count<=8?68:62;
-    return (positions[count]||positions[12]).map(([offset,y])=>({x:180+offset,offset,y:y+42,size,stemX:180+Math.max(-45,Math.min(45,offset*.36))}));
+    return (positions[count]||positions[12]).map(([offset,y])=>({x:180+offset,offset,y:y+72,size,stemX:180+Math.max(-45,Math.min(45,offset*.36))}));
   }
   function pixelLeaf(x,y,direction){
     const rows=[2,4,6,4,2],parts=[];
