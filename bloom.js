@@ -42,8 +42,9 @@
   const MAX_FLOWERS=12;
   let activeColorway=0,activeForm='all',vaseColor='berry',vaseShape='classic';
   let bouquet=[
-    {id:'narcissus',variant:0},{id:'clematis',variant:4},{id:'allium',variant:0},
-    {id:'calla',variant:6},{id:'strelitzia',variant:3},{id:'wisteria',variant:4}
+    {id:'narcissus',variant:0},{id:'clematis',variant:2},{id:'allium',variant:4},
+    {id:'echinacea',variant:1},{id:'plumeria',variant:6},{id:'calla',variant:0},
+    {id:'strelitzia',variant:3},{id:'wisteria',variant:1}
   ];
 
   host.innerHTML=`
