@@ -113,4 +113,16 @@
   .vase-color{width:34px;height:34px}
 }
 @media(prefers-reduced-motion:reduce){.bouquet-sway{animation:none}}
+@container (max-width:760px){
+  .bloom-exhibit{grid-template-columns:1fr}
+  .bloom-stage{min-height:480px;border-right:0;border-bottom:1px solid #31443c}
+  .bloom-copy{min-height:0;padding:22px 24px 25px}
+  .bouquet-picker{max-height:300px}
+  .bloom-copy .bloom-note{margin-top:4px!important}
+}
+@container (max-width:520px){
+  .bloom-stage{min-height:410px}
+  .bloom-copy{padding:19px 16px 22px}
+  .bouquet-picker{max-height:360px}
+}
 
