@@ -1,4 +1,4 @@
-/* Pixel bouquet studio: 24 flower forms, ten colorways and three vase shapes. */
+/* Pixel bouquet studio: a growing botanical library, ten colorways and three vase shapes. */
 (()=>{'use strict';
   const host=document.getElementById('bloom-exhibit'),flowers=window.flowerData,art=window.FlowerArt;
   if(!host||!Array.isArray(flowers)||!art)return;
@@ -28,11 +28,22 @@
     tall:{name:'Өндөр',widths:[39,37,35,39,45,51,55,57,57,56,54,52,50,48]},
     round:{name:'Бөөрөнхий',widths:[47,42,52,62,70,75,78,78,75,69,62,56,51,48]}
   };
+  const flowerForms={
+    sunflower:'solitary',daisy:'solitary',tulip:'solitary',poppy:'solitary',dandelion:'solitary',rose:'solitary',
+    lavender:'spike',lily:'solitary',iris:'solitary',lotus:'solitary',orchid:'cluster',bellflower:'cluster',
+    hydrangea:'cluster',cosmos:'solitary',hibiscus:'solitary',peony:'solitary',carnation:'solitary',marigold:'solitary',
+    sakura:'branching',snowdrop:'solitary',foxglove:'spike',pansy:'solitary',anemone:'solitary',magnolia:'solitary'
+  };
+  const formFilters=[
+    {id:'all',name:'Бүгд'},{id:'solitary',name:'Том цэцэг'},{id:'cluster',name:'Бөөгнөрөл'},
+    {id:'spike',name:'Түрүү'},{id:'branching',name:'Мөчир'},{id:'rosette',name:'Навчин сарнай'},{id:'cup',name:'Аяга'}
+  ];
+  const formOf=flower=>flower.form||flowerForms[flower.id]||'solitary';
   const MAX_FLOWERS=12;
-  let activeColorway=0,vaseColor='berry',vaseShape='classic';
+  let activeColorway=0,activeForm='all',vaseColor='berry',vaseShape='classic';
   let bouquet=[
-    {id:'rose',variant:1},{id:'daisy',variant:6},{id:'sunflower',variant:0},
-    {id:'lavender',variant:4},{id:'sakura',variant:8}
+    {id:'narcissus',variant:0},{id:'clematis',variant:4},{id:'allium',variant:0},
+    {id:'calla',variant:6},{id:'strelitzia',variant:3},{id:'wisteria',variant:4}
   ];
 
   host.innerHTML=`
@@ -55,12 +66,13 @@
       <span class="bloom-stage-hint" id="bouquet-hint" role="status" aria-live="polite"></span>
     </section>
     <section class="bloom-copy" aria-labelledby="bouquet-title">
-      <div class="bouquet-heading"><div><div class="eyebrow">✿ ӨӨРИЙНХӨӨРӨӨ УРЛА</div><h2 id="bouquet-title">Баглаа урлая.</h2></div><span class="choice-count">240<br><small>СОНГОЛТ</small></span></div>
-      <p class="bouquet-intro">24 өөр цэцгийн пиксел дүрсийг 10 өнгөөр хослуулаарай. Нэг нэгээр нь нэмээд, цэцэг бүрээ дарж аваарай.</p>
+      <div class="bouquet-heading"><div><div class="eyebrow">✿ ӨӨРИЙНХӨӨРӨӨ УРЛА</div><h2 id="bouquet-title">Баглаа урлая.</h2></div><span class="choice-count"><b id="flower-total">${flowers.length}</b><small>ЦЭЦГИЙН ТӨРӨЛ</small><span id="choice-total">${flowers.length*colorways.length} өнгө, дүрсний хослол</span></span></div>
+      <p class="bouquet-intro">${flowers.length} өөр цэцгийн хэлбэрийг 10 өнгөөр хослуулаарай. Нэг нэгээр нь нэмээд, ваараа өөрийнхөөрөө чимээрэй.</p>
       <div class="bouquet-actions"><span class="bouquet-size" id="bouquet-size" aria-live="polite"></span><button class="clear-bouquet" id="clear-bouquet" type="button">Цэвэрлэх ↺</button></div>
       <div class="bouquet-current" id="bouquet-current" aria-label="Баглаанд сонгосон цэцгүүд"></div>
       <fieldset class="bloom-fieldset"><legend>01 · ЦЭЦГИЙН ӨНГӨ</legend><div class="colorways" id="colorways" role="group" aria-label="Цэцгийн өнгө сонгох"></div></fieldset>
       <label class="bloom-search"><span>02 · ЦЭЦГЭЭ СОНГОХ</span><input id="bouquet-search" type="search" autocomplete="off" placeholder="Монгол эсвэл латин нэрээр хайх"></label>
+      <div class="flower-filters" id="flower-filters" role="group" aria-label="Цэцгийн ургалтын хэлбэрээр шүүх"></div>
       <div class="bouquet-picker" id="bouquet-picker" role="group" aria-label="Баглаанд нэмэх цэцгүүд"></div>
       <p class="bouquet-count" id="bouquet-count" aria-live="polite"></p>
       <div class="vase-controls">
@@ -75,24 +87,26 @@
   function pixelVase(){
     const shape=vaseShapes[vaseShape],color=vases[vaseColor];
     const rects=shape.widths.map((half,index)=>{
-      const y=330+index*9,left=180-half,width=half*2;
-      return `<rect x="${left}" y="${y}" width="${width}" height="9" fill="${color.fill}"/><rect x="${left}" y="${y}" width="8" height="9" fill="${color.light}"/><rect x="${left+width-13}" y="${y}" width="13" height="9" fill="${color.dark}"/>`;
+      const y=294+index*11,left=180-half,width=half*2;
+      return `<rect x="${left}" y="${y}" width="${width}" height="11" fill="${color.fill}"/><rect x="${left}" y="${y}" width="8" height="11" fill="${color.light}"/><rect x="${left+width-13}" y="${y}" width="13" height="11" fill="${color.dark}"/>`;
     }).join('');
-    return `<ellipse cx="180" cy="461" rx="${shape.widths[shape.widths.length-1]+8}" ry="5" fill="#070b0d" opacity=".58"/>${rects}<rect x="180" y="340" width="${Math.max(12,shape.widths[3]-10)}" height="70" fill="${color.light}" opacity=".18"/><rect x="${180-shape.widths[0]-5}" y="322" width="${shape.widths[0]*2+10}" height="14" fill="${color.rim}"/><rect x="${180-shape.widths[0]+4}" y="324" width="${(shape.widths[0]-4)*2}" height="6" fill="${color.inside}"/><rect x="${180-shape.widths[0]-5}" y="333" width="${shape.widths[0]*2+10}" height="3" fill="${color.dark}"/>`;
+    const neckWidth=shape.widths[2]*2-14;
+    const tile=`<g fill="${color.light}" opacity=".38"><rect x="176" y="354" width="8" height="8"/><rect x="168" y="362" width="8" height="8"/><rect x="184" y="362" width="8" height="8"/><rect x="176" y="370" width="8" height="8"/><rect x="176" y="365" width="8" height="2" fill="${color.rim}"/></g>`;
+    return `<ellipse cx="180" cy="461" rx="${shape.widths[shape.widths.length-1]+8}" ry="5" fill="#070b0d" opacity=".58"/>${rects}<rect x="${180-neckWidth/2}" y="314" width="${neckWidth}" height="116" fill="${color.light}" opacity=".14"/>${tile}<rect x="${180-shape.widths[0]-5}" y="286" width="${shape.widths[0]*2+10}" height="14" fill="${color.rim}"/><rect x="${180-shape.widths[0]+4}" y="288" width="${(shape.widths[0]-4)*2}" height="6" fill="${color.inside}"/><rect x="${180-shape.widths[0]-5}" y="297" width="${shape.widths[0]*2+10}" height="3" fill="${color.dark}"/>`;
   }
   function flowerLayout(count){
     const positions={
-      0:[],1:[[0,112]],2:[[-50,132],[50,132]],3:[[-78,148],[0,104],[78,148]],
-      4:[[-102,142],[-34,165],[34,165],[102,142]],5:[[-124,151],[-62,119],[0,94],[62,119],[124,151]],
-      6:[[-128,151],[-77,117],[-26,155],[26,155],[77,117],[128,151]],
-      7:[[-128,162],[-85,123],[-43,164],[0,98],[43,164],[85,123],[128,162]],
-      8:[[-132,160],[-94,120],[-56,164],[-18,126],[18,126],[56,164],[94,120],[132,160]],
-      9:[[-118,146],[-59,106],[0,88],[59,106],[118,146],[-94,178],[-31,151],[31,151],[94,178]],
-      10:[[-122,145],[-73,108],[-24,151],[24,151],[73,108],[122,145],[-95,179],[-32,162],[32,162],[95,179]],
-      11:[[-124,146],[-74,109],[-25,151],[25,151],[74,109],[124,146],[-108,179],[-54,160],[0,175],[54,160],[108,179]],
-      12:[[-104,110],[-52,78],[0,70],[52,78],[104,110],[-132,163],[-88,139],[-44,174],[0,143],[44,174],[88,139],[132,163]]
+      0:[],1:[[0,126]],2:[[-48,141],[48,141]],3:[[-76,151],[0,118],[76,151]],
+      4:[[-99,145],[-34,162],[34,162],[99,145]],5:[[-119,156],[-60,133],[0,116],[60,133],[119,156]],
+      6:[[-126,156],[-76,131],[-26,163],[26,163],[76,131],[126,156]],
+      7:[[-128,161],[-84,137],[-42,162],[0,116],[42,162],[84,137],[128,161]],
+      8:[[-130,160],[-92,132],[-54,162],[-18,139],[18,139],[54,162],[92,132],[130,160]],
+      9:[[-118,150],[-59,120],[0,112],[59,120],[118,150],[-94,169],[-31,151],[31,151],[94,169]],
+      10:[[-122,150],[-73,122],[-24,155],[24,155],[73,122],[122,150],[-95,174],[-32,161],[32,161],[95,174]],
+      11:[[-124,151],[-74,123],[-25,155],[25,155],[74,123],[124,151],[-108,174],[-54,160],[0,169],[54,160],[108,174]],
+      12:[[-104,124],[-52,110],[0,106],[52,110],[104,124],[-132,161],[-88,143],[-44,169],[0,145],[44,169],[88,143],[132,161]]
     };
-    const size=count<=1?92:count<=3?82:count<=5?72:count<=8?66:60;
+    const size=count<=1?94:count<=3?84:count<=5?76:count<=8?68:62;
     return (positions[count]||positions[12]).map(([offset,y])=>({x:180+offset,offset,y,size,stemX:180+Math.max(-45,Math.min(45,offset*.36))}));
   }
   function pixelLeaf(x,y,direction){
@@ -105,27 +119,33 @@
     });
     return parts.join('');
   }
-  function pixelStem(slot,index){
-    const topY=slot.y+slot.size*.34,bottomY=325,steps=Math.max(1,Math.ceil((bottomY-topY)/4));
-    const curve=(index%2===0?1:-1)*3,parts=[];
+  function pixelStem(slot,index,flower){
+    const form=formOf(flower),topY=slot.y+slot.size*.34,bottomY=288,steps=Math.max(1,Math.ceil((bottomY-topY)/4));
+    const curve=(index%2===0?1:-1)*2.5,parts=[];
     for(let step=0;step<=steps;step++){
       const t=step/steps,y=topY+(bottomY-topY)*t;
       const x=slot.x+(slot.stemX-slot.x)*t+Math.sin(t*Math.PI)*curve;
       parts.push(`<rect x="${Math.round(x)-1}" y="${Math.round(y)}" width="3" height="4" fill="${step%4===0?'#4d8756':'#356c49'}"/>`);
-      if(step===Math.round(steps*.42))parts.push(pixelLeaf(Math.round(x),Math.round(y),index%2===0?1:-1));
-      if(step===Math.round(steps*.68))parts.push(pixelLeaf(Math.round(x),Math.round(y),index%2===0?-1:1));
+      if(step===Math.round(steps*.4))parts.push(pixelLeaf(Math.round(x),Math.round(y),index%2===0?1:-1));
+      if(step===Math.round(steps*.66))parts.push(pixelLeaf(Math.round(x),Math.round(y),index%2===0?-1:1));
+      if(form==='branching'&&step===Math.round(steps*.34)){
+        const branch=index%2===0?1:-1;parts.push(`<path d="M${Math.round(x)} ${Math.round(y)} l${branch*10} -13 l${branch*5} -2" fill="none" stroke="#4d8756" stroke-width="2"/>`);
+        parts.push(`<rect x="${Math.round(x+branch*12)-1}" y="${Math.round(y)-17}" width="3" height="3" fill="#e6a9c0"/><rect x="${Math.round(x+branch*15)-1}" y="${Math.round(y)-15}" width="3" height="3" fill="#f0c96b"/>`);
+      }
+      if(form==='spike'&&step>steps*.35&&step<steps*.8&&step%Math.max(2,Math.floor(steps/5))===0)parts.push(`<rect x="${Math.round(x)+(index%2===0?3:-5)}" y="${Math.round(y)-2}" width="3" height="2" fill="#67925c"/>`);
     }
+    if(form==='rosette'){parts.push(pixelLeaf(slot.stemX,bottomY-5,-1),pixelLeaf(slot.stemX,bottomY-5,1))}
     return `<g class="bouquet-stem">${parts.join('')}</g>`;
   }
   function drawScene(){
     const plants=$('bouquet-flowers'),scene=$('bouquet-scene');
     const slots=flowerLayout(bouquet.length);
     const layers=bouquet.map((item,index)=>({item,index,slot:slots[index]})).sort((a,b)=>a.slot.y-b.slot.y);
-    const stems=layers.map(({index,slot})=>pixelStem(slot,index)).join('');
+    const stems=layers.map(({item,index,slot})=>pixelStem(slot,index,item)).join('');
     const heads=layers.map(({item,index,slot})=>{
       const width=slot.size*art.width/27,x=slot.x-width/2,y=slot.y-slot.size/2;
       const svg=art.renderSvg(item.id,item.variant).replace('<svg viewBox=',`<svg class="bouquet-flower" x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${width.toFixed(1)}" height="${slot.size}" viewBox="0 0 ${art.width} 27"`);
-      return `<g class="bouquet-sway" style="--sway-origin:${slot.stemX}px 325px;--sway-delay:${(index%5)*-.7}s">${svg}</g>`;
+      return `<g class="bouquet-sway" style="--sway-origin:${slot.x}px ${Math.round(slot.y+slot.size*.34)}px;--sway-delay:${(index%5)*-.7}s">${svg}</g>`;
     }).join('');
     plants.innerHTML=stems+heads;
     $('bouquet-vase').innerHTML=pixelVase();
@@ -152,9 +172,23 @@
       button.addEventListener('click',()=>{activeColorway=index;renderColorways();renderPicker()});host.append(button);
     });
   }
+  function renderFilters(){
+    const host=$('flower-filters');host.replaceChildren();
+    formFilters.forEach(filter=>{
+      const total=filter.id==='all'?flowers.length:flowers.filter(f=>formOf(f)===filter.id).length;
+      const button=document.createElement('button');button.type='button';button.className='flower-filter';button.dataset.form=filter.id;
+      button.setAttribute('aria-pressed',String(filter.id===activeForm));button.textContent=`${filter.name} · ${total}`;
+      button.addEventListener('click',()=>{
+        activeForm=filter.id;
+        host.querySelectorAll('.flower-filter').forEach(item=>item.setAttribute('aria-pressed',String(item.dataset.form===activeForm)));
+        renderPicker();
+      });
+      host.append(button);
+    });
+  }
   function renderPicker(){
     const query=$('bouquet-search').value.trim().toLocaleLowerCase();
-    const matches=flowers.filter(f=>(f.name+' '+f.latin+' '+f.signature).toLocaleLowerCase().includes(query));
+    const matches=flowers.filter(f=>(activeForm==='all'||formOf(f)===activeForm)&&(f.name+' '+f.latin+' '+f.signature).toLocaleLowerCase().includes(query));
     const picker=$('bouquet-picker');picker.replaceChildren();
     matches.forEach(f=>{
       const button=document.createElement('button');button.type='button';button.className='bouquet-choice';button.disabled=bouquet.length>=MAX_FLOWERS;
@@ -167,7 +201,8 @@
       });
       picker.append(button);
     });
-    $('bouquet-count').textContent=query?`${matches.length} цэцэг олдлоо · ${matches.length*colorways.length} өнгө, дүрсний хослол`:`${flowers.length} цэцгийн дүрс · ${flowers.length*colorways.length} өнгө, дүрсний хослол`;
+    const filterName=formFilters.find(filter=>filter.id===activeForm)?.name||'Бүгд';
+    $('bouquet-count').textContent=`${matches.length} / ${flowers.length} цэцэг · ${filterName} · ${matches.length*colorways.length} өнгө, дүрсний хослол`;
     if(!matches.length){const empty=document.createElement('p');empty.className='bouquet-empty';empty.textContent='Ийм нэртэй цэцэг алга. Монгол эсвэл латин нэрээр дахин хайгаарай.';picker.append(empty)}
   }
   function renderVaseControls(){
@@ -178,6 +213,6 @@
   }
   $('clear-bouquet').addEventListener('click',()=>{bouquet=[];drawScene();renderPicker();$('bloom-status').textContent='Баглаа цэвэрлэгдлээ. Шинэ цэцэг сонгоорой.'});
   $('bouquet-search').addEventListener('input',renderPicker);
-  renderColorways();renderVaseControls();drawScene();renderPicker();
+  renderColorways();renderFilters();renderVaseControls();drawScene();renderPicker();
 })();
 
