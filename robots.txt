@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Sitemap: https://batmunkh8969.github.io/flower-world-mn/sitemap.xml
+
