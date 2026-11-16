@@ -107,7 +107,7 @@
       12:[[-104,124],[-52,110],[0,106],[52,110],[104,124],[-132,161],[-88,143],[-44,169],[0,145],[44,169],[88,143],[132,161]]
     };
     const size=count<=1?94:count<=3?84:count<=5?76:count<=8?68:62;
-    return (positions[count]||positions[12]).map(([offset,y])=>({x:180+offset,offset,y,size,stemX:180+Math.max(-45,Math.min(45,offset*.36))}));
+    return (positions[count]||positions[12]).map(([offset,y])=>({x:180+offset,offset,y:y+24,size,stemX:180+Math.max(-45,Math.min(45,offset*.36))}));
   }
   function pixelLeaf(x,y,direction){
     const rows=[2,4,6,4,2],parts=[];
@@ -121,11 +121,11 @@
   }
   function pixelStem(slot,index,flower){
     const form=formOf(flower),topY=slot.y+slot.size*.34,bottomY=288,steps=Math.max(1,Math.ceil((bottomY-topY)/4));
-    const curve=(index%2===0?1:-1)*2.5,parts=[];
+    const curve=(index%2===0?1:-1)*4,parts=[];
     for(let step=0;step<=steps;step++){
       const t=step/steps,y=topY+(bottomY-topY)*t;
       const x=slot.x+(slot.stemX-slot.x)*t+Math.sin(t*Math.PI)*curve;
-      parts.push(`<rect x="${Math.round(x)-1}" y="${Math.round(y)}" width="3" height="4" fill="${step%4===0?'#4d8756':'#356c49'}"/>`);
+      parts.push(`<rect x="${Math.round(x)-2}" y="${Math.round(y)}" width="4" height="4" fill="${step%4===0?'#4d8756':'#356c49'}"/>`);
       if(step===Math.round(steps*.4))parts.push(pixelLeaf(Math.round(x),Math.round(y),index%2===0?1:-1));
       if(step===Math.round(steps*.66))parts.push(pixelLeaf(Math.round(x),Math.round(y),index%2===0?-1:1));
       if(form==='branching'&&step===Math.round(steps*.34)){
